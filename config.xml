@@ -13,5 +13,7 @@ Sasquash test - PhoneGap Build application.
 <author href="https://tumami.es" email="pedro@tumami.es">
 Pedro Aspiazu
 </author>
-
+<icon src="img/icon.png" gap:platform="android" gap:density="ldpi" />
+<icon src="img/icon.png" gap:platform="android" gap:density="mdpi" />
+<icon src="img/icon.png" gap:platform="android" gap:density="hdpi" />
 </widget>
