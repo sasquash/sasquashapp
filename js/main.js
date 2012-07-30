@@ -169,58 +169,51 @@ function toggleCompass() {
 }
 
 
+     // Wait for PhoneGap to load
+        document.addEventListener("deviceready", onDeviceReady, false);
+ 
+        // PhoneGap is ready
+        function onDeviceReady() {
+        // Do cool things here...
+        }
 
+  function uploadPhoto2(imageURI) {
 
-// take a new photo:
- function takePhoto() {
-  this.capture(Camera.PictureSourceType.CAMERA);
-};
+var viewport = document.getElementById('viewport');
+    console.log(imageURI);
+    viewport.style.display = "";
+    viewport.style.position = "absolute";
+    viewport.style.top = "10px";
+    viewport.style.left = "10px";
+    document.getElementById("test_img").src = imageURI;
 
-// capture either new or existing photo:
-capture: function(sourceType) {
-  navigator.camera.getPicture(this.onCaptureSuccess, this.onCaptureFail, {
-    destinationType: Camera.DestinationType.FILE_URI,
-    sourceType: sourceType,
-    correctOrientation: true
-  });
-};
+            var options = new FileUploadOptions();
+            options.fileKey="file";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
+ 
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+ 
+            options.params = params;
+            options.chunkedMode = false;
+ 
+            var ft = new FileTransfer();
+            ft.upload(imageURI, "http://tumami.es/phonegap/services/upload.php", win, fail, options);
+        }
 
-// if photo is captured successfully, then upload to server:
-onCaptureSuccess: function(imageURI) {
-  var fail, ft, options, params, win;
-  // callback for when the photo has been successfully uploaded:
-  success: function(response) {
-    alert("Your photo has been uploaded!");
-  };
-  // callback if the photo fails to upload successfully.
-  fail: function(error) {
-    alert("An error has occurred: Code = " + error.code);
-  };
-  options = new FileUploadOptions();
-  // parameter name of file:
-  options.fileKey = "my_image";
-  // name of the file:
-  options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-  // mime type:
-  options.mimeType = "text/plain";
-  params = {
-    val1: "test",
-    val2: "param"
-  };
-  options.params = params;
-  ft = new FileTransfer();
-  ft.upload(imageURI, 'http://tumami.es/phonegap/services/upload.php', success, fail, options);
-};
-
-// there was an error capturing the photo:
-onCaptureFail: function(message) {
-  alert("Failed because: " + message);
-};
-
-
-
-
-
+        function takeImage() {
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(uploadPhoto2, function(message) {
+            alert('get picture failed');
+        },{
+            quality: 50, 
+            destinationType: navigator.camera.DestinationType.FILE_URI
+        }
+            );
+ 
+        }
         
         function getImage() {
             // Retrieve image file location from specified source
