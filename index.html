@@ -62,6 +62,7 @@
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             alert(r.response);
+            $('#image').attr('src', 'data:image/jpeg;base64,' + params['image']);
         }
  
         function fail(error) {
@@ -83,10 +84,15 @@
 
 
 <button onclick="getImage();">Upload a Photo</button>
-            
+
             <a href="#map" rel="external" data-role="button" data-inline="false" class="mapIt">Map</a>
             <a href="#cordova" data-role="button" data-inline="false" class="mapIt">cordova</a>
         </div>
+
+
+          <p>
+        <img style="width:60px; height:60px" id="image" src="" />
+    </p>
          <button onclick="captureImage();">Capture Image</button> <br>
         <ul id="employeeList" data-role="listview" data-theme="a" data-filter="true"></ul>
     </div>
