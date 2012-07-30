@@ -27,23 +27,8 @@
         // Do cool things here...
         }
 
-
-
-
-        function getImage() {
-            // Retrieve image file location from specified source
-             navigator.device.capture.captureImage(uploadPhoto, function(message) {
-            alert('get picture failed');
-        },{
-            quality: 50, 
-            destinationType: navigator.camera.DestinationType.FILE_URI,
-            sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-        }
-            );
- 
-        }
         
-        function _getImage() {
+        function getImage() {
             // Retrieve image file location from specified source
             navigator.camera.getPicture(uploadPhoto, function(message) {
             alert('get picture failed');
@@ -101,6 +86,8 @@
 
 
 <button onclick="getImage();">Upload a Photo</button>
+<a href="#" onclick="javascript:captureImage();">captureImage</a>
+
 
             <a href="#map" rel="external" data-role="button" data-inline="false" class="mapIt">Map</a>
             <a href="#cordova" data-role="button" data-inline="false" class="mapIt">cordova</a>
@@ -110,7 +97,6 @@
           <p>
         <img style="width:60px; height:60px" id="image" src="" />
     </p>
-         <button onclick="captureImage();">Capture Image</button> <br>
         <ul id="employeeList" data-role="listview" data-theme="a" data-filter="true"></ul>
     </div>
 
@@ -128,6 +114,8 @@
     <a href="#" onclick="javascript:clearWatch();"> clearWatch</a>
     <a href="#" onclick="javascript:watchPosition();">watchPos</a>
     <a href="#" onclick="javascript:getPosition();">getPos</a>
+
+    
 
 </div>
 <div data-role="content" class="ui-content" role="main">    
