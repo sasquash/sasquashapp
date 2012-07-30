@@ -31,7 +31,6 @@ $(document).ready(function() {
         function success(imageData) {
             var url = 'http://tumami.es/phonegap/services/upload.php';
             var params = {image: imageData};
-            
             // send the data
             $.post(url, params, function(data) {
                 
@@ -66,7 +65,7 @@ $(document).ready(function() {
         <input type="button" class="send-image" value="library" />
     </p>
 
-        
+
         <div data-role="controlgroup" data-type="horizontal" >
             <a href="#map" rel="external" data-role="button" data-inline="false" class="mapIt">Map</a>
             <a href="#cordova" data-role="button" data-inline="false" class="mapIt">cordova</a>
