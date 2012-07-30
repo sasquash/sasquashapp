@@ -27,6 +27,8 @@
         // Do cool things here...
         }
 
+
+
         
         function getImage() {
             // Retrieve image file location from specified source
@@ -70,23 +72,7 @@
         function fail(error) {
             alert("An error has occurred: Code = " = error.code);
         }
-     // Called when capture operation is finished
-    //
-    function captureSuccess(r) {
-           var params = {image: r};
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
-            alert(r.response);
-            $('#image').attr('src', 'data:image/jpeg;base64,' + params['image']);
-    }
-
-    // Called if something bad happens.
-    // 
-    function captureError(error) {
-        var msg = 'An error occurred during capture: ' + error.code;
-        navigator.notification.alert(msg, null, 'Uh oh!');
-    }
+ 
         </script>
 
 </head>
@@ -102,8 +88,6 @@
 
 
 <button onclick="getImage();">Upload a Photo</button>
-<a href="#" onclick="javascript:captureImage();">captureImage</a>
-
 
             <a href="#map" rel="external" data-role="button" data-inline="false" class="mapIt">Map</a>
             <a href="#cordova" data-role="button" data-inline="false" class="mapIt">cordova</a>
@@ -113,6 +97,7 @@
           <p>
         <img style="width:60px; height:60px" id="image" src="" />
     </p>
+         <button onclick="captureImage();">Capture Image</button> <br>
         <ul id="employeeList" data-role="listview" data-theme="a" data-filter="true"></ul>
     </div>
 
@@ -130,8 +115,6 @@
     <a href="#" onclick="javascript:clearWatch();"> clearWatch</a>
     <a href="#" onclick="javascript:watchPosition();">watchPos</a>
     <a href="#" onclick="javascript:getPosition();">getPos</a>
-
-    
 
 </div>
 <div data-role="content" class="ui-content" role="main">    
