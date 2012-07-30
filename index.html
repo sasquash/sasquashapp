@@ -17,7 +17,37 @@
     <!-- jQuery UI Map v3 -->
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery.ui.map.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    function sendImage(src) {
+        
+        // Set the image source [library || camera]
+        src = (src == 'library') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA;
+        
+        // Aquire the image -> Phonegap API
+        navigator.camera.getPicture(success, fail, {quality: 45, sourceType: src});
+        
+        // Successfully aquired image data -> base64 encoded string of the image file
+        function success(imageData) {
+            var url = 'http://www.mysite.com/API/mobileImageUpload.php';
+            var params = {image: imageData};
+            
+            // send the data
+            $.post(url, params, function(data) {
+                
+                // Display the selected image on send complete
+                $('#image').attr('src', 'data:image/jpeg;base64,' + params['image']);
+                
+            });
+        }
+        
+        function fail(message) { alert(message); }
+    }
+    
+    $('.send-image').click(function () { sendImage($(this).val()); }); 
+});
 
+</script>
 </head>
 
 <body >
@@ -27,6 +57,16 @@
           <h1>Sasquatch</h1>
       </div>
       <div data-role="content" data-theme="a">
+
+   <p>
+        <img style="width:60px; height:60px" id="image" src="" />
+    </p>
+    <p>
+        <input type="button" class="send-image" value="camera" />
+        <input type="button" class="send-image" value="library" />
+    </p>
+
+        
         <div data-role="controlgroup" data-type="horizontal" >
             <a href="#map" rel="external" data-role="button" data-inline="false" class="mapIt">Map</a>
             <a href="#cordova" data-role="button" data-inline="false" class="mapIt">cordova</a>
