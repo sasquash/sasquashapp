@@ -184,14 +184,14 @@ function doDeviceReady ()
         options.fileKey="file";
         options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
         options.mimeType="image/jpeg";
-        
+
         var params = new Object();
         params.value1 = "test";
         params.value2 = "param";
-        
+
         options.params = params;
         options.chunkedMode = false;
-        
+
         var ft = new FileTransfer();
         ft.upload(imageURI, "http://tumami.es/phonegap/services/upload.php", win, fail, options);
     }
@@ -205,14 +205,14 @@ function doDeviceReady ()
                 destinationType: navigator.camera.DestinationType.FILE_URI
             }
             );
-            
+
         }
         
 
 
 
 
-        
+
         function getImage() {
             // Retrieve image file location from specified source
             navigator.camera.getPicture(uploadPhoto, function(message) {
@@ -223,35 +223,35 @@ function doDeviceReady ()
                 sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
             }
             );
-            
+
         }
-        
+
         function uploadPhoto(imageURI) {
             var options = new FileUploadOptions();
             options.fileKey="file";
             options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
             options.mimeType="image/jpeg";
-            
+
             var params = new Object();
             params.value1 = "test";
             params.value2 = "param";
-            
+
             options.params = params;
             options.chunkedMode = false;
-            
+
             var ft = new FileTransfer();
             ft.upload(imageURI, "http://tumami.es/phonegap/services/upload.php", win, fail, options);
         }
-        
+
         function win(r) {
             var params = {image: r};
             console.log("Code = " + r.responseCode);
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
             alert(r.response);
-            $('#image').attr('src', 'data:image/jpeg;base64,' + params['image']);
+           
         }
-        
+
         function fail(error) {
             alert("An error has occurred: Code = " = error.code);
         }
