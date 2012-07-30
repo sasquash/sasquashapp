@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/themes/default.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile.structure-1.1.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    <link rel="apple-touch-startup-image" href="http://jquerymobile.com/demos/1.0a4.1/docs/_assets/images/jquery-logo.png" />
+    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    
+    <script type="text/javascript" charset="utf-8" src="js/geolocation.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/cordova-2.0.0.js"></script>
+<script type="text/javascript" src="js/json2.js"></script> 
+    <!-- jQuery UI Map v3 -->
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery.ui.map.min.js"></script>
+
+</head>
+
+<body >
+<!-- Employee Page -->
+    <div id="employeeListPage" data-role="page" data-theme="a">
+        <div data-role="header" data-theme="a" data-position="fixed">
+          <h1>Sasquatch</h1>
+      </div>
+      <div data-role="content" data-theme="a">
+        <div data-role="controlgroup" data-type="horizontal" >
+            <a href="#map" rel="external" data-role="button" data-inline="false" class="mapIt">Map</a>
+            <a href="#cordova" data-role="button" data-inline="false" class="mapIt">cordova</a>
+        </div>
+         <button onclick="captureImage();">Capture Image</button> <br>
+        <ul id="employeeList" data-role="listview" data-theme="a" data-filter="true"></ul>
+    </div>
+
+</div>		
+
+
+
+<!-- Map Page -->
+<div id="map" data-role="page" data-theme="a" style="min-height: 420px; ">
+    <div data-role="header" data-theme="a" data-position="fixed">
+      <h1>Sasquatch</h1>
+      <a data-rel="back" class="ui-btn-left ui-btn ui-btn-up-a ui-btn-corner-all ui-shadow" data-theme="a">
+        <span class="ui-btn-inner ui-btn-corner-all" aria-hidden="true"><span class="ui-btn-text">Back</span></span>
+    </a>
+    <a href="#" onclick="javascript:clearWatch();"> clearWatch</a>
+    <a href="#" onclick="javascript:watchPosition();">watchPos</a>
+    <a href="#" onclick="javascript:getPosition();">getPos</a>
+
+</div>
+<div data-role="content" class="ui-content" role="main">    
+    <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+        <div id="map_canvas" style="height: 400px; position: relative; background-color: rgb(229, 227, 223); overflow: hidden; ">
+
+        </div>
+        <div id="geolocation"></div>
+    </div>
+</div>
+</div>
+
+
+
+<!-- Cordova Page -->
+<div data-role="page" id="cordova" data-theme="a">
+
+
+    <div data-role="content" class="ui-content" role="main"> 
+
+        <div data-role="controlgroup" data-type="horizontal" >
+          
+        <ul id="info" data-role="listview" data-theme="a"> 
+            <li><h4>Platform: <span id="platform"> &nbsp;</span>,   Version: <span id="version">&nbsp;</span></h4></li>
+            <li><h4>UUID: <span id="uuid"> &nbsp;</span>,   Name: <span id="name">&nbsp;</span></h4></li>
+            <li><h4>Width: <span id="width"> &nbsp;</span>,   Height: <span id="height">&nbsp;
+            </span>, Color Depth: <span id="colorDepth"></span></h4></li>
+        </ul>
+
+
+        <ul id="accel-data" data-role="listview" data-theme="a"> 
+            <li><dt>X:</dt><dd id="x">&nbsp;</dd></li>
+            <li><dt>Y:</dt><dd id="y">&nbsp;</dd></li>
+            <li> <dt>Z:</dt><dd id="z">&nbsp;</dd></li>
+        </ul>
+  </div>
+
+  <div data-role="controlgroup" data-type="vertical" >
+   <ul data-role="listview" data-theme="a" data-filter="true"> 
+    <li><a href="#" class="btn large" onclick="toggleAccel();">Toggle Accelerometer</a> </li>
+    <li><a href="#" class="btn large" onclick="getLocation();">Get Location</a></li>
+    <li><a href="tel:411" class="btn large">Call 411</a></li>
+    <li><a href="#" class="btn large" onclick="beep();">Beep</a></li>
+    <li><a href="#" class="btn large" onclick="vibrate();">Vibrate</a></li>
+    <li><a href="#" class="btn large" onclick="show_pic();">Get a Picture</a></li>
+    <li><a href="#" class="btn large" onclick="get_contacts();return false;">Get Phone's Contacts</a></li>
+    <li><a href="#" class="btn large" onclick="check_network();return false;">Check Network</a></li>
+    <li><a href="#" class="btn large" onclick="toggleCompass();return false;">Toggle Compass</a></li>
+</ul>
+<dl>
+    <dt>Compass Heading:</dt><dd id="h">Off</dd>
+</dl>
+<div id="viewport" class="viewport" style="display: none;">
+  <img style="width:60px;height:60px" id="test_img" src="" />
+</div>
+</div>
+</div>
+</div>
+
+<!-- Loader Page -->
+<div data-role="page" id="loader" data-theme="a">
+    <div data-role="content">
+        <div id="loading"></div>
+         <img src="http://jquerymobile.com/demos/1.0a4.1/docs/_assets/images/jquery-logo.png" alt="splash" />
+    </div>
+</div>
+<!-- Splash Page -->
+<div data-role="page" data-theme="b" id="splash" style="background-color: #fff;"> 
+    <div class="splash">
+        <img src="http://jquerymobile.com/demos/1.0a4.1/docs/_assets/images/jquery-logo.png" alt="splash" />
+    </div>
+</div>
+
+<script src="js/employeelist.js"></script>
+<script src="js/employeedetails.js"></script>
+<script src="js/reportlist.js"></script>
+
+</body>
+
+</html>
