@@ -171,41 +171,51 @@ function toggleCompass() {
 
 
 
-    // Called when capture operation is finished
-    //
-    function captureSuccess(mediaFiles) {
-           var params = {image: r};
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
-            alert(r.response);
-            $('#image').attr('src', 'data:image/jpeg;base64,' + params['image']);
-    }
+// take a new photo:
+ function takePhoto() {
+  this.capture(Camera.PictureSourceType.CAMERA);
+};
 
-    // Called if something bad happens.
-    // 
-    function captureError(error) {
-        var msg = 'An error occurred during capture: ' + error.code;
-        navigator.notification.alert(msg, null, 'Uh oh!');
-    }
+// capture either new or existing photo:
+capture: function(sourceType) {
+  navigator.camera.getPicture(this.onCaptureSuccess, this.onCaptureFail, {
+    destinationType: Camera.DestinationType.FILE_URI,
+    sourceType: sourceType,
+    correctOrientation: true
+  });
+};
 
-    // A button will call this function
-    //
-    function captureImage() {
-        // Launch device camera application, 
-        // allowing user to capture up to 2 images
-        navigator.device.capture.captureImage(captureSuccess, captureError, {limit: 2});
-    }
+// if photo is captured successfully, then upload to server:
+onCaptureSuccess: function(imageURI) {
+  var fail, ft, options, params, win;
+  // callback for when the photo has been successfully uploaded:
+  success: function(response) {
+    alert("Your photo has been uploaded!");
+  };
+  // callback if the photo fails to upload successfully.
+  fail: function(error) {
+    alert("An error has occurred: Code = " + error.code);
+  };
+  options = new FileUploadOptions();
+  // parameter name of file:
+  options.fileKey = "my_image";
+  // name of the file:
+  options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+  // mime type:
+  options.mimeType = "text/plain";
+  params = {
+    val1: "test",
+    val2: "param"
+  };
+  options.params = params;
+  ft = new FileTransfer();
+  ft.upload(imageURI, 'http://tumami.es/phonegap/services/upload.php', success, fail, options);
+};
 
-    // Upload files to server
-    function uploadFile(mediaFile) {
-        var ft = new FileTransfer(),
-            path = mediaFile.fullPath,
-            name = mediaFile.name;
-            ft.upload(path, "http://tumami.es/phonegap/services/upload.php", win, fail, options);
-    }
-
-
+// there was an error capturing the photo:
+onCaptureFail: function(message) {
+  alert("Failed because: " + message);
+};
 
 
 
