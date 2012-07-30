@@ -70,7 +70,23 @@
         function fail(error) {
             alert("An error has occurred: Code = " = error.code);
         }
- 
+     // Called when capture operation is finished
+    //
+    function captureSuccess(r) {
+           var params = {image: r};
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
+            alert(r.response);
+            $('#image').attr('src', 'data:image/jpeg;base64,' + params['image']);
+    }
+
+    // Called if something bad happens.
+    // 
+    function captureError(error) {
+        var msg = 'An error occurred during capture: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    }
         </script>
 
 </head>
